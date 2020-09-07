@@ -13,13 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.devsparkle.codes.posts.features.list.PostListActivity">
+        <activity android:name="com.devsparkle.posts.features.list.PostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity android:name="com.devsparkle.posts.features.details.PostDetailsActivity" />
+
     </application>
 
 </manifest>

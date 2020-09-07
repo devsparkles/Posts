@@ -1,5 +1,6 @@
 package com.devsparkle.posts.core.di.modules
 
+import com.devsparkle.posts.features.details.CommentsAdapter
 import com.devsparkle.posts.features.list.PostsAdapter
 import dagger.Module
 import dagger.Provides
@@ -13,5 +14,9 @@ class AdapterModule {
         return PostsAdapter(baseAvatarUrl)
     }
 
+    @Provides
+    fun provideCommentsAdapter(@Named("base.avatar.url") baseAvatarUrl: String): CommentsAdapter {
+        return CommentsAdapter(baseAvatarUrl)
+    }
 
 }

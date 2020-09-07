@@ -1,4 +1,4 @@
-package com.devsparkle.posts.features.list
+package com.devsparkle.posts.features.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,13 +10,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.IllegalStateException
 
-class PostListViewModel(private val dataSource: PostsDataSource) : ViewModel() {
-
+class PostDetailsViewModel(private val dataSource: PostsDataSource) : ViewModel() {
     val result = MutableLiveData<FetchResult>()
     val disposables = CompositeDisposable()
+    var post: Post? = null
 
-    fun fetchPosts() {
-        disposables.add(dataSource.fetchPosts()
+    fun fetchDetails() {
+        post ?: throw IllegalStateException("No post set")
+
+        disposables.add(dataSource.fetchComments(post!!.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -35,7 +37,7 @@ class PostListViewModel(private val dataSource: PostsDataSource) : ViewModel() {
 
     sealed class FetchResult {
         object Fetching : FetchResult()
-        data class Success(val posts: List<Post>) : FetchResult()
+        data class Success(val comments: List<Comment>) : FetchResult()
         data class Error(val exception: Throwable) : FetchResult()
     }
 }
