@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Posts</string>
+
+    <string name="fetching">Gathering…</string>
+    <string name="error">Oh dear!</string>
+    <string name="no_comments">No comments</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
