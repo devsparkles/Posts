@@ -1,6 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.0"
+
+
+    ext.retrofit_version = '2.9.0'
+    ext.okhttp_3_version = '3.12.0'
+    ext.rxandroid_version = '2.1.1'
+    ext.rxjava_version = '2.2.0'
+    ext.dagger_version = '2.28.3'
+    ext.picasso_version = '2.71828'
+    ext.mockito_version = '2.24.5'
+    ext.mockito_kotlin_version = '2.1.0'
+    ext.recycler_view_version = '1.1.0'
+    ext.card_view_version = '1.0.0'
+    ext.lifecycle_version = '2.2.0'
+    ext.core_testing_version = '2.1.0'
+
+    ext.espresso_version = '3.3.0'
+
+
+
     repositories {
         google()
         jcenter()
