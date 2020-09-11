@@ -20,7 +20,7 @@ import com.devsparkle.posts.core.PostsApplication
 import com.devsparkle.posts.features.details.POST_KEY
 import com.devsparkle.posts.features.details.PostDetailsActivity
 import com.devsparkle.posts.util.DaggerTestAppComponent
-import com.devsparkle.posts.util.IdlingSchedulerRule
+import com.devsparkle.posts.util.IoSchedulerRule
 import com.devsparkle.posts.util.MatcherUtils
 import com.devsparkle.posts.util.TestPropertyModule
 
@@ -42,7 +42,7 @@ class PostListActivityTest {
     val activityRule = IntentsTestRule(PostListActivity::class.java, false, false)
 
     @get:Rule
-    val schedulerRule = IdlingSchedulerRule()
+    val schedulerRule = IoSchedulerRule()
 
     private lateinit var mockServer: MockWebServer
 
@@ -67,7 +67,7 @@ class PostListActivityTest {
 
     @Test
     fun beforeFetching_fetchingTextDisplayed() {
-        IdlingSchedulerRule.clearIdlingScheduler()
+        IoSchedulerRule.clearIdlingScheduler()
         activityRule.launchActivity(null)
 
         onView(withId(R.id.status_text)).check(matches(isDisplayed()))
@@ -157,7 +157,7 @@ class PostListActivityTest {
             }
 
             override fun perform(uiController: UiController?, view: View?) {
-                IdlingSchedulerRule.clearIdlingScheduler()
+                IoSchedulerRule.clearIdlingScheduler()
                 viewAction.perform(uiController, view)
             }
         }

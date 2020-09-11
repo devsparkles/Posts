@@ -1,6 +1,7 @@
 package com.devsparkle.posts.features.details
 
 import android.content.Intent
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -12,8 +13,7 @@ import com.devsparkle.posts.core.PostsApplication
 import com.devsparkle.posts.core.data.models.Post
 import com.devsparkle.posts.core.data.models.User
 import com.devsparkle.posts.util.DaggerTestAppComponent
-import com.devsparkle.posts.util.IdlingSchedulerRule
-import com.devsparkle.posts.util.MatcherUtils
+import com.devsparkle.posts.util.IoSchedulerRule
 import com.devsparkle.posts.util.TestPropertyModule
 
 import okhttp3.mockwebserver.MockResponse
@@ -23,15 +23,18 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.devsparkle.posts.util.MatcherUtils.Companion.hasRecyclerItemCount
 
 @RunWith(AndroidJUnit4::class)
 class PostDetailsActivityTest {
 
+
     @get:Rule
     val activityRule = ActivityTestRule(PostDetailsActivity::class.java, false, false)
 
+
     @get:Rule
-    val schedulerRule = IdlingSchedulerRule()
+    val schedulerRule = IoSchedulerRule()
 
     private lateinit var mockServer: MockWebServer
 
@@ -54,12 +57,17 @@ class PostDetailsActivityTest {
 
     @Test
     fun beforeFetchingComments_postDetailsDisplayed() {
-        IdlingSchedulerRule.clearIdlingScheduler()
+        IoSchedulerRule.clearIdlingScheduler()
+
+
         activityRule.launchActivity(createPostIntent())
 
-        onView(withText(testPost.title)).check(matches(isDisplayed()))
-        onView(withText(testPost.body)).check(matches(isDisplayed()))
-        onView(withText(testPost.user.username.toUpperCase())).check(matches(isDisplayed()))
+            onView(withText(testPost.title)).check(matches(isDisplayed()))
+            onView(withText(testPost.body)).check(matches(isDisplayed()))
+            onView(withText(testPost.user.username.toUpperCase())).check(matches(isDisplayed()))
+
+
+
     }
 
     @Test
@@ -79,6 +87,7 @@ class PostDetailsActivityTest {
 
         activityRule.launchActivity(createPostIntent())
 
+
         onView(withText(testPost.title)).check(matches(isDisplayed()))
         onView(withText(testPost.body)).check(matches(isDisplayed()))
         onView(withText(testPost.user.username.toUpperCase())).check(matches(isDisplayed()))
@@ -86,7 +95,7 @@ class PostDetailsActivityTest {
 
     @Test
     fun beforeFetchingComments_fetchingTextDisplayed() {
-        IdlingSchedulerRule.clearIdlingScheduler()
+        IoSchedulerRule.clearIdlingScheduler()
         activityRule.launchActivity(createPostIntent())
 
         onView(withText(R.string.fetching)).check(matches(isDisplayed()))
@@ -98,6 +107,7 @@ class PostDetailsActivityTest {
 
         activityRule.launchActivity(createPostIntent())
 
+
         onView(withText(R.string.no_comments)).check(matches(isDisplayed()))
     }
 
@@ -106,6 +116,7 @@ class PostDetailsActivityTest {
         error()
 
         activityRule.launchActivity(createPostIntent())
+
 
         onView(withText(R.string.error)).check(matches(isDisplayed()))
     }
@@ -116,7 +127,8 @@ class PostDetailsActivityTest {
 
         activityRule.launchActivity(createPostIntent())
 
-        onView(withId(R.id.comment_list)).check(matches(MatcherUtils.hasRecyclerItemCount(5 + 2)))
+
+        onView(withId(R.id.comment_list)).check(matches(hasRecyclerItemCount(5 + 2)))
     }
 
     @Test
@@ -125,7 +137,8 @@ class PostDetailsActivityTest {
 
         activityRule.launchActivity(createPostIntent())
 
-        onView(withId(R.id.comment_list)).check(matches(MatcherUtils.hasRecyclerItemCount(0 + 2)))
+
+        onView(withId(R.id.comment_list)).check(matches(hasRecyclerItemCount(0 + 2)))
     }
 
     @After
